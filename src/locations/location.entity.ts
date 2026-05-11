@@ -13,4 +13,10 @@ export class Location {
 
   @Column({ nullable: true })
   description: string;
+
+  @Column({ type: 'double precision', nullable: true })
+  latitude: number;
+
+  @Column({ type: 'double precision', nullable: true })
+  longitude: number;
 }
