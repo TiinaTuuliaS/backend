@@ -1,12 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Location } from '../locations/location.entity';
 
 @Entity('reports')
 export class Report {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  location_id: number;
+  @ManyToOne(() => Location)
+  @JoinColumn({ name: 'location_id' })
+  location: Location;
 
   @Column()
   user_id: number;
