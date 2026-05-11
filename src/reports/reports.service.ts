@@ -10,9 +10,13 @@ export class ReportsService {
     private repo: Repository<Report>,
   ) {}
 
-findAll() {
-  return this.repo.find({
-    relations: ['location'],
-  });
-}
+  findAll() {
+    return this.repo.find({
+      relations: ['location'],
+    });
+  }
+
+  create(data: any) {
+    return this.repo.save(data);
+  }
 }
