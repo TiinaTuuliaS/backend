@@ -1,30 +1,21 @@
-import axios from 'axios';
+import fs from 'fs';
 
-const overpassQuery = `
-[out:json][timeout:10];
-node["tourism"="camp_site"](60.313,24.514,60.314,24.515);
-out;
-`;
-
-async function fetchNuuksioData() {
-  try {
-  const response = await axios.post(
-  'https://overpass.kumi.systems/api/interpreter',
-  overpassQuery,
-  {
-    headers: {
-      'Content-Type': 'text/plain',
-      'User-Agent': 'RetkeilyApp/1.0',
-    },
-  }
+const rawData = fs.readFileSync(
+  './data/nuuksio.geojson',
+  'utf-8'
 );
 
-    console.log(response.data);
-  } catch (error: any) {
-    console.error(
-      error.response?.data || error.message
-    );
-  }
-}
+const geojson = JSON.parse(rawData);
 
-fetchNuuksioData();
+console.log(geojson);
+
+geojson.features.forEach((feature: any) => {
+  console.log('Nimi:', feature.properties.name);
+  console.log('Tyyppi:', feature.properties.type);
+  console.log(
+    'Koordinaatit:',
+    feature.geometry.coordinates
+  );
+
+  console.log('---');
+});
