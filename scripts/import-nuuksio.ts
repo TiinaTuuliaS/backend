@@ -1,30 +1,29 @@
 import axios from 'axios';
 
 const overpassQuery = `
-[out:json];
-(
-  node["tourism"="camp_site"](60.2,24.4,60.4,24.7);
-  node["amenity"="shelter"](60.2,24.4,60.4,24.7);
-  node["amenity"="drinking_water"](60.2,24.4,60.4,24.7);
-);
+[out:json][timeout:10];
+node["tourism"="camp_site"](60.313,24.514,60.314,24.515);
 out;
 `;
 
 async function fetchNuuksioData() {
   try {
-    const response = await axios.post(
-      'https://overpass-api.de/api/interpreter',
-      overpassQuery,
-      {
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-      }
-    );
+  const response = await axios.post(
+  'https://overpass.kumi.systems/api/interpreter',
+  overpassQuery,
+  {
+    headers: {
+      'Content-Type': 'text/plain',
+      'User-Agent': 'RetkeilyApp/1.0',
+    },
+  }
+);
 
-    console.log(response.data.elements);
-  } catch (error) {
-    console.error('Virhe haettaessa dataa:', error);
+    console.log(response.data);
+  } catch (error: any) {
+    console.error(
+      error.response?.data || error.message
+    );
   }
 }
 
